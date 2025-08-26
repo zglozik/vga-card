@@ -62,25 +62,6 @@ module fifo
       rddone_tmp = '0;
       wrdone_tmp = '0;
       
-      /*
-      if (rden && wren && num_free_reg == SIZE) begin
-         // pass through without internal memory when empty
-         rddata = wrdata;
-         rddone_tmp = '1;
-         wrdone_tmp = '1;
-      end
-      else begin
-         if (rden && num_free_reg != SIZE) begin
-            rddata = memory[rdptr];
-            rddone_tmp = '1;
-         end
-         if (wren && (num_free_reg != '0 || rddone_tmp)) begin
-            wrdone_tmp = '1;
-         end
-      end
-      num_free_tmp  = num_free_reg + (SIZE_WIDTH'(rddone_tmp) - SIZE_WIDTH'(wrdone_tmp));
-      */
-
       if (rden && num_free_reg != SIZE) begin
          rddone_tmp = '1;
       end
