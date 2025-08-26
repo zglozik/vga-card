@@ -3,7 +3,7 @@ Overview
 
 FPGA learner project in System Verilog to implement a hardware VGA graphics card (640x480, 12bit colors) with simple drawing primitives, SDRAM-based frame buffer and 2D sprite support, on a [Terasic DE10-Lite dev board](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=234&No=1021). The implementation was tested by running the Chrome Dinosaur game on the same FPGA using the Nios II soft core CPU, using hardware registers and custom NIOS instructions to interface with the hardware video card.
 
-[<img src="https://img.youtube.com/vi/6tkLuwqnhOc/0.jpg">](https://youtu.be/6tkLuwqnhOc)
+[<img title="click for youtube video" src="https://img.youtube.com/vi/6tkLuwqnhOc/0.jpg">](https://youtu.be/6tkLuwqnhOc)
 
 ## Features
 
@@ -108,7 +108,7 @@ Verified OK
 Starting processor at address 0x00010180
 ```
 
-- You should see th Dino game on the screen. One of the board buttons is the reset, the other button is for jumping. Debug output on nios2 terminal:
+- You should see the Dino game on the screen. One of the board buttons is the reset, the other button is for jumping. Debug output on nios2 terminal:
 
 ```
 [crt0.S] Inst & Data Cache Initialized.
