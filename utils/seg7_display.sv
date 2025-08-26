@@ -7,7 +7,7 @@ module seg7_display(
 );
    always_comb
    begin
-		if (en)
+      if (en)
          case (number)
             4'd0:    display = 8'b11000000;
             4'd1:    display = 8'b11111001;

@@ -7,15 +7,15 @@ module vga_sprite_stream_tb;
    import vga_pkg::*;
 
    localparam T = 10;
-	localparam SPRITE_WIDTH	 = 48;
-	localparam SPRITE_HEIGHT = 48;
+   localparam SPRITE_WIDTH  = 48;
+   localparam SPRITE_HEIGHT = 48;
 
    // Sprite memory address and size in bytes
-	localparam SPRITE_MEM_BASE_ADDRESS = 1024;
+   localparam SPRITE_MEM_BASE_ADDRESS = 1024;
    localparam SPRITE_MEM_SIZE = SPRITE_WIDTH * SPRITE_HEIGHT / 8;
 
-	localparam string MEM_SPRITE_FILE = "memory_sim_sprite.mem";
-	localparam ST_EMPTY_WIDTH = $clog2(MM_MEM_DATA_WIDTH / 8 + 1);
+   localparam string MEM_SPRITE_FILE = "memory_sim_sprite.mem";
+   localparam ST_EMPTY_WIDTH = $clog2(MM_MEM_DATA_WIDTH / 8 + 1);
 
    // Top-left corner of test sprite location
    localparam SPRITE_X1 = 10;
@@ -89,7 +89,7 @@ module vga_sprite_stream_tb;
       .st_data,
       .st_startofpacket,
       .st_endofpacket,
-		.st_empty,
+      .st_empty,
       .st_valid
    );
 
@@ -225,7 +225,7 @@ module vga_sprite_stream_tb;
 
       // Read empty end of packet word
       assert (st_endofpacket) else $error("end of packet should be high for the trailer");
-		assert (st_empty == MM_MEM_DATA_WIDTH / 8) else $error("all symbols should be empty in this heartbeat");
+      assert (st_empty == MM_MEM_DATA_WIDTH / 8) else $error("all symbols should be empty in this heartbeat");
       assert (!st_startofpacket) else $error("start of packet should be low for the trailer");
       
       // No more data should be available

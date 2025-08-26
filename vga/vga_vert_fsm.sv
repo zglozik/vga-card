@@ -4,8 +4,8 @@ module vga_vert_fsm
 (
    input  logic clk,             // 25Mhz for 640x480 at 60Hz refresh rate
    input  logic reset,
-	input  logic vga_hs,          // VGA HSYNC signal to synchronize with
-	output logic vga_vs,          // VGA VSYNC signal
+   input  logic vga_hs,          // VGA HSYNC signal to synchronize with
+   output logic vga_vs,          // VGA VSYNC signal
    output logic addr_y_valid,    // pixel in addr_y needs to be displayed
    output logic [ADDR_Y_WIDTH-1:0] addr_y     // pixel to display
 );

@@ -1,21 +1,21 @@
 
 module graphics_line
-	import vga_pkg::*, graphics_pkg::*;
+   import vga_pkg::*, graphics_pkg::*;
 (
-	input	logic clk,
-	input logic reset,
+   input logic clk,
+   input logic reset,
 
-	// Avalon MM Slave interface for providing input
+   // Avalon MM Slave interface for providing input
    input  logic                         mm_csr_write,
    input  logic [MM_CSR_ADDR_WIDTH-1:0] mm_csr_address,
    input  logic [MM_CSR_DATA_WIDTH-1:0] mm_csr_writedata,
    output logic                         mm_csr_waitrequest,
-	
-	// Operation control signals
-	input	 logic clken,
-	input  logic start,
-	output logic done,
-	
+   
+   // Operation control signals
+   input  logic clken,
+   input  logic start,
+   output logic done,
+   
    // Avalon ST source interface for streaming pixels to be changed in frame buffer
    input  logic                      st_ready,
    output logic [ST_DATA_WIDTH-1:0]  st_data,
@@ -53,11 +53,11 @@ module graphics_line
 
    typedef enum logic [2:0] {
       IDLE,
-		HORIZ_INIT_1,	// Pipelined initialize stages for horizontal drawing state
-		HORIZ_INIT_2,
+      HORIZ_INIT_1,  // Pipelined initialize stages for horizontal drawing state
+      HORIZ_INIT_2,
       DRAWING_HORIZ, // Move along X while drawing line
-		VERT_INIT_1,	// Pipelined initialize stages for vertical drawing state
-		VERT_INIT_2,
+      VERT_INIT_1,   // Pipelined initialize stages for vertical drawing state
+      VERT_INIT_2,
       DRAWING_VERT,  // Move along Y while drawing line
       DONE
    } state_t;
@@ -71,14 +71,14 @@ module graphics_line
          IDLE:
             if (start)
                next_state = low_slope ? HORIZ_INIT_1 : VERT_INIT_1;
-			HORIZ_INIT_1:
-				next_state = HORIZ_INIT_2;
-			VERT_INIT_1:
-				next_state = VERT_INIT_2;
-			HORIZ_INIT_2:
-				next_state = DRAWING_HORIZ;
-			VERT_INIT_2:
-				next_state = DRAWING_VERT;
+         HORIZ_INIT_1:
+            next_state = HORIZ_INIT_2;
+         VERT_INIT_1:
+            next_state = VERT_INIT_2;
+         HORIZ_INIT_2:
+            next_state = DRAWING_HORIZ;
+         VERT_INIT_2:
+            next_state = DRAWING_VERT;
          DRAWING_HORIZ:
             if (st_ready && x == x1)
                next_state = DONE;
@@ -120,18 +120,18 @@ module graphics_line
                   coordinate_t line_addr_end_tmp;
                   logic signed [COORD_DATA_WIDTH-1:0] dx_tmp, dy_tmp;
                   
-						line_addr_start_tmp = line_addr_start.x < line_addr_end.x ? line_addr_start : line_addr_end;
-						line_addr_end_tmp   = line_addr_start.x < line_addr_end.x ? line_addr_end : line_addr_start;
+                  line_addr_start_tmp = line_addr_start.x < line_addr_end.x ? line_addr_start : line_addr_end;
+                  line_addr_end_tmp   = line_addr_start.x < line_addr_end.x ? line_addr_end : line_addr_start;
 
-						dx_tmp = line_addr_end_tmp.x - line_addr_start_tmp.x;
-						if (line_addr_start_tmp.y < line_addr_end_tmp.y) begin
-							dy_tmp = line_addr_end_tmp.y - line_addr_start_tmp.y;
-							yi <= COORD_DATA_WIDTH'(1);
-						end
-						else begin
-							dy_tmp = line_addr_start_tmp.y - line_addr_end_tmp.y;
-							yi <= -(COORD_DATA_WIDTH'(1));
-						end
+                  dx_tmp = line_addr_end_tmp.x - line_addr_start_tmp.x;
+                  if (line_addr_start_tmp.y < line_addr_end_tmp.y) begin
+                     dy_tmp = line_addr_end_tmp.y - line_addr_start_tmp.y;
+                     yi <= COORD_DATA_WIDTH'(1);
+                  end
+                  else begin
+                     dy_tmp = line_addr_start_tmp.y - line_addr_end_tmp.y;
+                     yi <= -(COORD_DATA_WIDTH'(1));
+                  end
 
                   x  <= line_addr_start_tmp.x;
                   y  <= line_addr_start_tmp.y;
@@ -139,25 +139,25 @@ module graphics_line
                   y1 <= line_addr_end_tmp.y;
                   dx <= dx_tmp;
                   dy <= dy_tmp;
-					end
+               end
             VERT_INIT_1:
                begin
                   coordinate_t line_addr_start_tmp;
                   coordinate_t line_addr_end_tmp;
                   logic signed [COORD_DATA_WIDTH-1:0] dx_tmp, dy_tmp;
                   
-						line_addr_start_tmp = line_addr_start.y < line_addr_end.y ? line_addr_start : line_addr_end;
-						line_addr_end_tmp   = line_addr_start.y < line_addr_end.y ? line_addr_end : line_addr_start;
+                  line_addr_start_tmp = line_addr_start.y < line_addr_end.y ? line_addr_start : line_addr_end;
+                  line_addr_end_tmp   = line_addr_start.y < line_addr_end.y ? line_addr_end : line_addr_start;
 
-						dy_tmp = line_addr_end_tmp.y - line_addr_start_tmp.y;
-						if (line_addr_start_tmp.x < line_addr_end_tmp.x) begin
-							dx_tmp = line_addr_end_tmp.x - line_addr_start_tmp.x;
-							xi <= COORD_DATA_WIDTH'(1);
-						end
-						else begin
-							dx_tmp = line_addr_start_tmp.x - line_addr_end_tmp.x;
-							xi <= -(COORD_DATA_WIDTH'(1));
-						end
+                  dy_tmp = line_addr_end_tmp.y - line_addr_start_tmp.y;
+                  if (line_addr_start_tmp.x < line_addr_end_tmp.x) begin
+                     dx_tmp = line_addr_end_tmp.x - line_addr_start_tmp.x;
+                     xi <= COORD_DATA_WIDTH'(1);
+                  end
+                  else begin
+                     dx_tmp = line_addr_start_tmp.x - line_addr_end_tmp.x;
+                     xi <= -(COORD_DATA_WIDTH'(1));
+                  end
 
                   x  <= line_addr_start_tmp.x;
                   y  <= line_addr_start_tmp.y;
@@ -165,15 +165,15 @@ module graphics_line
                   y1 <= line_addr_end_tmp.y;
                   dx <= dx_tmp;
                   dy <= dy_tmp;
-					end
+               end
             HORIZ_INIT_2:
                begin
-						D <= COORD_DATA_WIDTH'(2 * dy - dx);
-					end
+                  D <= COORD_DATA_WIDTH'(2 * dy - dx);
+               end
             VERT_INIT_2:
                begin
-						D <= COORD_DATA_WIDTH'(2 * dx - dy);
-					end
+                  D <= COORD_DATA_WIDTH'(2 * dx - dy);
+               end
             DRAWING_HORIZ:
                begin
                   if (st_ready && x < x1) begin

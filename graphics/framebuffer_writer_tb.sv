@@ -8,15 +8,15 @@ module framebuffer_writer_tb;
 
    localparam T = 10;
 
-	logic clk;
-	logic reset;
+   logic clk;
+   logic reset;
 
    // Avalon ST source interface for input pixels
    logic   st_ready;
    pixel_t st_data;
    logic   st_valid;
    
-	// Avalon MM Slave interface for writing to frame buffer
+   // Avalon MM Slave interface for writing to frame buffer
    logic                         mm_write;
    logic [MM_MEM_ADDR_WIDTH-1:0] mm_address;
    logic [MM_MEM_DATA_WIDTH-1:0] mm_writedata;

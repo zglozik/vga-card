@@ -1,9 +1,9 @@
 
 module graphics_instruction(
-	input  logic    clk,
+   input  logic    clk,
    input  logic    reset,
 
-	input  logic    nios_clk,
+   input  logic    nios_clk,
    input  logic    nios_clken,
    input  logic    nios_reset,
    

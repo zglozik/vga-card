@@ -136,7 +136,7 @@ module vga_frame_buffer_prefetch
          if (!mm_read || !mm_waitrequest) begin
             if (current_state == READING
                && (mm_pending_reads_with_done < MAX_PENDING_READS)
-               && (mm_pending_reads < fifo_num_free_reg)		// compare previous mem read state with previous FIFO state
+               && (mm_pending_reads < fifo_num_free_reg)    // compare previous mem read state with previous FIFO state
                && mm_next_address != end_address_reg) begin
                // We can start a new read
                mm_read          <= '1;

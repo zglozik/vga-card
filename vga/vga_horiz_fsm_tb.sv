@@ -7,7 +7,7 @@ module vga_horiz_fsm_tb;
 
    logic clk;
    logic reset;
-	logic vga_hs;
+   logic vga_hs;
    logic addr_x_valid;
    logic [9:0] addr_x;
 
@@ -66,8 +66,8 @@ module vga_horiz_fsm_tb;
       end
 
       #(T);
-      $stop;	
-	end
+      $stop;   
+   end
   
 
 endmodule: vga_horiz_fsm_tb

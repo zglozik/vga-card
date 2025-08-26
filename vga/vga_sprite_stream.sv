@@ -6,12 +6,12 @@ module vga_sprite_stream
    MM_ADDR_WIDTH        = MM_MEM_ADDR_WIDTH,
    MM_DATA_WIDTH        = MM_MEM_DATA_WIDTH,
    MM_START_ADDRESS     = 'h400_0000,
-	SPRITE_WIDTH			= 48,
-	SPRITE_HEIGHT  		= 48,
+   SPRITE_WIDTH         = 48,
+   SPRITE_HEIGHT        = 48,
    SPRITE_SIZE          = SPRITE_WIDTH * SPRITE_HEIGHT / 8, // Sprite size in bytes, one bit per pixel
    FIFO_SIZE            = SPRITE_WIDTH / MM_DATA_WIDTH,     // Fifo size in words, one line
    FIFO_SIZE_WIDTH      = $clog2(FIFO_SIZE + 1),
-	ST_EMPTY_WIDTH			= $clog2(MM_DATA_WIDTH/8 + 1)
+   ST_EMPTY_WIDTH       = $clog2(MM_DATA_WIDTH/8 + 1)
 )
 (
    input  logic clk,
@@ -36,19 +36,19 @@ module vga_sprite_stream
    output logic [MM_DATA_WIDTH-1:0]  st_data,
    output logic                      st_startofpacket,
    output logic                      st_endofpacket,
-	output logic [ST_EMPTY_WIDTH-1:0] st_empty,
+   output logic [ST_EMPTY_WIDTH-1:0] st_empty,
    output logic                      st_valid
 );
    localparam MM_MAX_PENDING_READS = 7;   // Must match the Avalon IP configuration
 
    localparam MM_FIFO_DATA_WIDTH = $bits(prefetcher_fifo_item_t);
 
-	// This module will:
-	//	- read sprite pixels from memory into a FIFO, one word (multiple pixels) per fifo item
-	// - keep track of which (x, y) pixel we need to produce on Avalon source interface
-	// - Depending on whether (x, y) is in the sprite:
-	//		- Output black if it is outside
-	//		- Output black or white if it is inside, depending on the next bit read from sprite fifo
+   // This module will:
+   // - read sprite pixels from memory into a FIFO, one word (multiple pixels) per fifo item
+   // - keep track of which (x, y) pixel we need to produce on Avalon source interface
+   // - Depending on whether (x, y) is in the sprite:
+   //    - Output black if it is outside
+   //    - Output black or white if it is inside, depending on the next bit read from sprite fifo
 
    // Process CSR requests, changes will take effect for the next frame, store pending and current settings
    typedef struct {
@@ -67,7 +67,7 @@ module vga_sprite_stream
    } csr_data_t;
 
    csr_data_t csr_pending, csr_current;
-	
+   
    assign mm_csr_waitrequest = '0;
 
    always_ff @(posedge clk)
@@ -172,30 +172,30 @@ module vga_sprite_stream
    prefetcher_fifo_item_t fifo_rddata_record;
    assign fifo_rddata_record = fifo_rddata;
 
-	// Narrow FIFO output from MM_DATA_WIDTH to 1 bit (sprite pixel)
-	logic st_fifo_source_ready;
-	logic st_fifo_source_data;
-	logic st_fifo_source_startofpacket;
-	logic st_fifo_source_endofpacket;
-	logic st_fifo_source_valid;
+   // Narrow FIFO output from MM_DATA_WIDTH to 1 bit (sprite pixel)
+   logic st_fifo_source_ready;
+   logic st_fifo_source_data;
+   logic st_fifo_source_startofpacket;
+   logic st_fifo_source_endofpacket;
+   logic st_fifo_source_valid;
 
-	width_narrowing_adapter #(
-		.ST_SINK_WIDTH(MM_DATA_WIDTH),
-		.ST_SOURCE_WIDTH(1)
-	) width_narrowing_adapter_0(
-		.clk,
-		.reset,
-		.st_sink_ready(fifo_rden),
-		.st_sink_data(fifo_rddata_record.data),
-		.st_sink_startofpacket(fifo_rddata_record.startofpacket),
-		.st_sink_endofpacket(fifo_rddata_record.endofpacket),
+   width_narrowing_adapter #(
+      .ST_SINK_WIDTH(MM_DATA_WIDTH),
+      .ST_SOURCE_WIDTH(1)
+   ) width_narrowing_adapter_0(
+      .clk,
+      .reset,
+      .st_sink_ready(fifo_rden),
+      .st_sink_data(fifo_rddata_record.data),
+      .st_sink_startofpacket(fifo_rddata_record.startofpacket),
+      .st_sink_endofpacket(fifo_rddata_record.endofpacket),
       .st_sink_valid(fifo_rddata_valid),
-		.st_source_ready(st_fifo_source_ready),
-		.st_source_data(st_fifo_source_data),
-		.st_source_startofpacket(st_fifo_source_startofpacket),
-		.st_source_endofpacket(st_fifo_source_endofpacket),
+      .st_source_ready(st_fifo_source_ready),
+      .st_source_data(st_fifo_source_data),
+      .st_source_startofpacket(st_fifo_source_startofpacket),
+      .st_source_endofpacket(st_fifo_source_endofpacket),
       .st_source_valid(st_fifo_source_valid)
-	);
+   );
 
    // FSM for producing one heartbeat on Avalon ST source for each pixel of the display
    typedef enum logic [2:0] {
@@ -272,8 +272,8 @@ module vga_sprite_stream
          fifo_packet_done <= 1'b0;
       end
       else if (st_fifo_source_valid && st_fifo_source_ready && st_fifo_source_endofpacket) begin
-			fifo_packet_done <= 1'b1;
-		end
+         fifo_packet_done <= 1'b1;
+      end
    end
 
    always_comb

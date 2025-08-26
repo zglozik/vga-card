@@ -9,7 +9,7 @@ module vga_frame_buffer_stream
    MM_FRAME_SIZE        = WIDTH * HEIGHT * FB_PIXEL_WIDTH / 8, // Frame size in bytes
    FIFO_SIZE            = 5 * WIDTH,                           // Fifo size in words, cache a couple of lines
    FIFO_SIZE_WIDTH      = $clog2(FIFO_SIZE + 1),
-	ST_EMPTY_WIDTH			= $clog2(MM_DATA_WIDTH/8 + 1)
+   ST_EMPTY_WIDTH       = $clog2(MM_DATA_WIDTH/8 + 1)
 )
 (
    input  logic clk,
@@ -37,7 +37,7 @@ module vga_frame_buffer_stream
    output logic [MM_DATA_WIDTH-1:0]  st_data,
    output logic                      st_startofpacket,
    output logic                      st_endofpacket,
-	output logic [ST_EMPTY_WIDTH-1:0] st_empty,
+   output logic [ST_EMPTY_WIDTH-1:0] st_empty,
    output logic                      st_valid
 );
    localparam MM_MAX_PENDING_READS = 50;   // Must match the Avalon IP configuration
@@ -117,7 +117,7 @@ module vga_frame_buffer_stream
    assign st_data          = fifo_rddata_record.data;
    assign st_startofpacket = fifo_rddata_record.startofpacket;
    assign st_endofpacket   = fifo_rddata_record.endofpacket;
-	assign st_empty			= fifo_rddata_record.endofpacket ? ST_EMPTY_WIDTH'(MM_DATA_WIDTH / 8) : '0;
+   assign st_empty         = fifo_rddata_record.endofpacket ? ST_EMPTY_WIDTH'(MM_DATA_WIDTH / 8) : '0;
    assign st_valid         = fifo_rddata_valid;
 
 endmodule: vga_frame_buffer_stream

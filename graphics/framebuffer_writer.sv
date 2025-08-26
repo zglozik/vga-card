@@ -7,8 +7,8 @@ module framebuffer_writer
    MM_START_ADDRESS = 0
 )
 (
-	input	logic clk,
-	input logic reset,
+   input logic clk,
+   input logic reset,
 
    // Avalon ST sink interface for input pixels
    output logic                      st_ready,
@@ -16,7 +16,7 @@ module framebuffer_writer
    input  logic [7:0]                st_channel,
    input  logic                      st_valid,
    
-	// Avalon MM Master interface for writing to frame buffer
+   // Avalon MM Master interface for writing to frame buffer
    output logic                     mm_write,
    output logic [MM_ADDR_WIDTH-1:0] mm_address,
    output logic [MM_DATA_WIDTH-1:0] mm_writedata,

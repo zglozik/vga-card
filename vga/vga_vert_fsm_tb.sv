@@ -7,7 +7,7 @@ module vga_vert_fsm_tb;
 
    logic clk;
    logic reset;
-	logic vga_hs, vga_vs;
+   logic vga_hs, vga_vs;
    logic addr_x_valid, addr_y_valid;
    logic [9:0] addr_x, addr_y;
 
@@ -70,8 +70,8 @@ module vga_vert_fsm_tb;
       end
 
       #(T);
-      $stop;	
-	end
+      $stop;   
+   end
   
 
 endmodule: vga_vert_fsm_tb

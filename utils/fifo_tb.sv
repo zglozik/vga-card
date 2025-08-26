@@ -11,7 +11,7 @@ module fifo_tb;
    typedef struct {
       logic rden;
       logic [7:0] rddata;
-		logic rddata_valid;
+      logic rddata_valid;
       logic rddone;
 
       logic wren;
@@ -66,7 +66,7 @@ module fifo_tb;
       .reset,
       .rden,
       .rddata,
-		.rddata_valid,
+      .rddata_valid,
       .rddone,
       .wren,
       .wrdata,
@@ -90,7 +90,7 @@ module fifo_tb;
       reset  <= '1;
      
       @(posedge clk);
-		reset <= '0;
+      reset <= '0;
 
       for (int i = 0; i < $size(test_data); ++i) begin
          @(posedge clk) begin
@@ -98,14 +98,14 @@ module fifo_tb;
             wren   <= test_data[i].wren;
             wrdata <= test_data[i].wrdata;
 
-				assert(rddata ==? test_data[i].rddata) else $error("rddata failed in iteration %d", i);
-				assert(rddone == test_data[i].rddone) else $error("rddone failed in iteration %d", i);
-				assert(rddata_valid == test_data[i].rddata_valid) else $error("rddata_valid failed in iteration %d", i);
-				assert(wrdone == test_data[i].wrdone) else $error("wrdone failed in iteration %d", i);
-				assert(num_used == test_data[i].num_used) else $error("num_used failed in iteration %d", i);
-				assert(num_free == test_data[i].num_free) else $error("num_free failed in iteration %d", i);
-				assert(empty == test_data[i].empty) else $error("empty failed in iteration %d", i);
-				assert(full == test_data[i].full) else $error("full failed in iteration %d", i);
+            assert(rddata ==? test_data[i].rddata) else $error("rddata failed in iteration %d", i);
+            assert(rddone == test_data[i].rddone) else $error("rddone failed in iteration %d", i);
+            assert(rddata_valid == test_data[i].rddata_valid) else $error("rddata_valid failed in iteration %d", i);
+            assert(wrdone == test_data[i].wrdone) else $error("wrdone failed in iteration %d", i);
+            assert(num_used == test_data[i].num_used) else $error("num_used failed in iteration %d", i);
+            assert(num_free == test_data[i].num_free) else $error("num_free failed in iteration %d", i);
+            assert(empty == test_data[i].empty) else $error("empty failed in iteration %d", i);
+            assert(full == test_data[i].full) else $error("full failed in iteration %d", i);
          end
       end
 

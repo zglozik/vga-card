@@ -1,21 +1,21 @@
 
 module graphics_rect_fill
-	import vga_pkg::*, graphics_pkg::*;
+   import vga_pkg::*, graphics_pkg::*;
 (
-	input	logic clk,
-	input logic reset,
+   input logic clk,
+   input logic reset,
 
-	// Avalon MM Slave interface for providing input
+   // Avalon MM Slave interface for providing input
    input  logic                         mm_csr_write,
    input  logic [MM_CSR_ADDR_WIDTH-1:0] mm_csr_address,
    input  logic [MM_CSR_DATA_WIDTH-1:0] mm_csr_writedata,
    output logic                         mm_csr_waitrequest,
-	
-	// Operation control signals
-	input	 logic clken,
-	input  logic start,
-	output logic done,
-	
+   
+   // Operation control signals
+   input  logic clken,
+   input  logic start,
+   output logic done,
+   
    // Avalon ST source interface for streaming pixels to be changed in frame buffer
    input  logic                      st_ready,
    output logic [ST_DATA_WIDTH-1:0]  st_data,

@@ -8,8 +8,8 @@ module vga_frame_buffer_stream_tb;
 
    localparam T = 10;
    localparam FRAME_SIZE = 48;
-	localparam MEM_INIT_OFFSET = 16'hFA00;
-	localparam ST_EMPTY_WIDTH = $clog2(MM_MEM_DATA_WIDTH / 8 + 1);
+   localparam MEM_INIT_OFFSET = 16'hFA00;
+   localparam ST_EMPTY_WIDTH = $clog2(MM_MEM_DATA_WIDTH / 8 + 1);
 
    logic clk;
    logic reset;
@@ -76,7 +76,7 @@ module vga_frame_buffer_stream_tb;
       .st_data,
       .st_startofpacket,
       .st_endofpacket,
-		.st_empty,
+      .st_empty,
       .st_valid
    );
 
@@ -126,7 +126,7 @@ module vga_frame_buffer_stream_tb;
          assert (st_data == MEM_INIT_OFFSET + i) else $error("incorrect data returned");
          assert ((i != 0) ^ st_startofpacket) else $error("start of packet should be high only for first word");
          assert (!st_endofpacket) else $error("end of packet should be low for packet content");
-			assert (st_empty == 0) else $error("no symbols should be empty in this heartbeat");
+         assert (st_empty == 0) else $error("no symbols should be empty in this heartbeat");
       end
 
       #(T);
@@ -135,7 +135,7 @@ module vga_frame_buffer_stream_tb;
 
       // Read empty end of packet word
       assert (st_endofpacket) else $error("end of packet should be high for the trailer");
-		assert (st_empty == MM_MEM_DATA_WIDTH / 8) else $error("all symbols should be empty in this heartbeat");
+      assert (st_empty == MM_MEM_DATA_WIDTH / 8) else $error("all symbols should be empty in this heartbeat");
       assert (!st_startofpacket) else $error("start of packet should be low for the trailer");
       
       // No more data should be available
@@ -166,8 +166,8 @@ module vga_frame_buffer_stream_tb;
          assert (st_data == MEM_INIT_OFFSET + i) else $error("incorrect data returned");
          assert ((i != 0) ^ st_startofpacket) else $error("start of packet should be high only for first word");
          assert (!st_endofpacket) else $error("end of packet should be low for packet content");
-			assert (st_empty == 0) else $error("no symbols should be empty in this heartbeat");
-		end
+         assert (st_empty == 0) else $error("no symbols should be empty in this heartbeat");
+      end
 
       #(T);
       wait (st_valid)
@@ -175,7 +175,7 @@ module vga_frame_buffer_stream_tb;
 
       // Read empty end of packet word
       assert (st_endofpacket) else $error("end of packet should be high for the trailer");
-		assert (st_empty == MM_MEM_DATA_WIDTH / 8) else $error("all symbols should be empty in this heartbeat");
+      assert (st_empty == MM_MEM_DATA_WIDTH / 8) else $error("all symbols should be empty in this heartbeat");
       assert (!st_startofpacket) else $error("start of packet should be low for the trailer");
 
       // Stop reading

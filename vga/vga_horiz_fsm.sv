@@ -20,7 +20,7 @@ module vga_horiz_fsm
 (
    input  logic clk,             // 25Mhz for 640x480 at 60Hz refresh rate
    input  logic reset,
-	output logic vga_hs,          // VGA HSYNC signal
+   output logic vga_hs,          // VGA HSYNC signal
    output logic addr_x_valid,    // pixel in addr_x needs to be displayed
    output logic [ADDR_X_WIDTH-1:0] addr_x     // pixel to display
 );

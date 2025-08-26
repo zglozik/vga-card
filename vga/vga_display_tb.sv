@@ -27,10 +27,10 @@ module vga_display_tb;
    logic                         mm_csr_waitrequest;
 
    // Output RGB values, HSYNC/VSYNC signals
-	logic vga_hs_out;
-	logic vga_vs_out;
-	logic [DISPLAY_CDEPTH-1:0] vga_r;
-	logic [DISPLAY_CDEPTH-1:0] vga_g;
+   logic vga_hs_out;
+   logic vga_vs_out;
+   logic [DISPLAY_CDEPTH-1:0] vga_r;
+   logic [DISPLAY_CDEPTH-1:0] vga_g;
    logic [DISPLAY_CDEPTH-1:0] vga_b;
 
 
@@ -66,16 +66,16 @@ module vga_display_tb;
    begin: rgb_counter_update
       if (reset) begin
          counter <= '0;
-			frames  <= '0;
-		end
+         frames  <= '0;
+      end
       else if (st_ready) begin
-			if (counter == READS_PER_FRAME) begin
-				counter <= '0;
-				frames  <= frames + 1'b1;
-			end
-			else begin
-				counter <= counter + 1'b1;
-			end
+         if (counter == READS_PER_FRAME) begin
+            counter <= '0;
+            frames  <= frames + 1'b1;
+         end
+         else begin
+            counter <= counter + 1'b1;
+         end
       end
    end
    

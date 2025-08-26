@@ -8,20 +8,20 @@ module graphics_rect_fill_tb;
 
    localparam T = 10;
 
-	logic clk;
-	logic clken;
-	logic reset;
+   logic clk;
+   logic clken;
+   logic reset;
 
-	// Avalon MM interface for providing input
+   // Avalon MM interface for providing input
    logic                         mm_csr_write;
    logic [MM_CSR_ADDR_WIDTH-1:0] mm_csr_address;
    logic [MM_CSR_DATA_WIDTH-1:0] mm_csr_writedata;
    logic                         mm_csr_waitrequest;
-	
-	// Operation control signals
-	logic start;
-	logic done;
-	
+   
+   // Operation control signals
+   logic start;
+   logic done;
+   
    // Avalon ST source interface for streaming pixels to be changed in frame buffer
    logic                      st_ready;
    pixel_t                    st_data;

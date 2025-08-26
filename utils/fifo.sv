@@ -12,7 +12,7 @@ module fifo
    
    input  logic rden,
    output logic [DATA_WIDTH-1:0] rddata,
-	output logic rddata_valid,
+   output logic rddata_valid,
    output logic rddone,
 
    input  logic wren,
@@ -72,7 +72,7 @@ module fifo
    end
 
    assign rddata = memory[rdptr];
-	assign rddata_valid = num_free_reg != SIZE;
+   assign rddata_valid = num_free_reg != SIZE;
    assign rddone = rddone_tmp;
    assign wrdone = wrdone_tmp;
 
