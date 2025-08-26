@@ -3,6 +3,8 @@ Overview
 
 FPGA learner project in System Verilog to implement a hardware VGA graphics card (640x480, 12bit colors) with simple drawing primitives, SDRAM-based frame buffer and 2D sprite support, on a [Terasic DE10-Lite dev board](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=234&No=1021). The implementation was tested by running the Chrome Dinosaur game on the same FPGA using the Nios II soft core CPU, using hardware registers and custom NIOS instructions to interface with the hardware video card.
 
+[<img src="https://img.youtube.com/vi/6tkLuwqnhOc/0.jpg">](https://youtu.be/6tkLuwqnhOc)
+
 ## Features
 
 - Frame buffer stored in SDRAM with 12-bit color depth, 2 bytes per pixel. Frame buffer is accessible via Avalon MM Slave interface by user code and hardware drawing primitives.
